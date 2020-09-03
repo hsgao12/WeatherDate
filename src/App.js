@@ -1,25 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Search from './Components/Search';
+import { useLoadScript } from '@react-google-maps/api';
+import LocationState from './Context/location/LocationState.js';
+
+const libraries = ['places'];
 
 function App() {
+  //Load Google Maps Scripts
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+    libraries: libraries,
+  });
+  console.log(process.env.REACT_APP_GOOGLE_API_KEY);
+
+  if (loadError) {
+    return 'ERROR LOADING SCRIPTS';
+  }
+
+  if (!isLoaded) {
+    return 'LOADING';
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <LocationState>
+      <div className="App">
+        <Search />
+      </div>
+    </LocationState>
   );
 }
 
