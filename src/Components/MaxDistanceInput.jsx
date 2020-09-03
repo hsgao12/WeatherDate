@@ -12,8 +12,8 @@ const MaxDistanceInput = () => {
   return (
     <input
       value={locationContext.maxDistance}
-      type="text"
-      name="text"
+      type="number"
+      name="maxDist"
       placeholder="Maximum distance away from you?"
       onChange={onChange}
     />

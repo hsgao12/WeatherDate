@@ -1,4 +1,4 @@
-import { SET_LNG_LAT, SET_MAX_DISTANCE } from '../types.js';
+import { SET_LNG_LAT, SET_MAX_DISTANCE, SET_LOCATION_ID } from '../types.js';
 
 export default (state, action) => {
   switch (action.type) {
@@ -10,7 +10,14 @@ export default (state, action) => {
     case SET_MAX_DISTANCE:
       return {
         ...state,
-        distanceFrom: action.payload,
+        maxDistance: action.payload,
       };
+    case SET_LOCATION_ID:
+      return {
+        ...state,
+        locationId: action.payload,
+      };
+    default:
+      console.log(action.type);
   }
 };
