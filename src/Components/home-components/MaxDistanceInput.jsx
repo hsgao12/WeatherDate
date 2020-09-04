@@ -1,5 +1,5 @@
 import React from 'react';
-import LocationContext from '../Context/location/locationContext.js';
+import LocationContext from '../../Context/location/locationContext.js';
 
 const MaxDistanceInput = () => {
   //Initialize Context

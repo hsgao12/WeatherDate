@@ -1,8 +1,16 @@
 import React from 'react';
 import './App.css';
-import Search from './Components/Search';
+
+//Google Maps Modules
 import { useLoadScript } from '@react-google-maps/api';
 import LocationState from './Context/location/LocationState.js';
+
+//React Routing
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+//Components
+import Home from './Pages/Home.jsx';
+import Results from './Pages/Results.jsx';
 
 const libraries = ['places'];
 
@@ -24,9 +32,14 @@ function App() {
 
   return (
     <LocationState>
-      <div className="App">
-        <Search />
-      </div>
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/results/:locationId" component={Results} />
+          </Switch>
+        </div>
+      </Router>
     </LocationState>
   );
 }
