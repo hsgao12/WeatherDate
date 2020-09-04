@@ -2,3 +2,5 @@ export const SET_LNG_LAT = 'SET_LNG_LAT';
 export const SET_MAX_DISTANCE = 'SET_DISTANCE_FROM';
 export const SET_LOCATION_ID = 'SET_LOCATION_ID';
 export const SET_LOCATION_WEATHER = 'SET_LOCATION_WEATHER';
+export const SET_PLACES = 'SET_PLACES';
+export const FILTER_PLACES = 'FILTER_PLACES';

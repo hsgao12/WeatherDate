@@ -38,6 +38,7 @@ const Search = () => {
           try {
             const results = await getGeocode({ address });
             const { lat, lng } = await getLatLng(results[0]);
+            console.log(results[0]);
 
             locationContext.setCoords({ lat, lng });
             locationContext.setLocationId(results[0].place_id);

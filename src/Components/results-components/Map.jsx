@@ -15,6 +15,10 @@ const options = {
 const Map = () => {
   const locationContext = React.useContext(LocationContext);
 
+  React.useEffect(() => {
+    locationContext.setPlaces();
+  }, []);
+
   return (
     <div>
       <GoogleMap

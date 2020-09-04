@@ -20,7 +20,6 @@ function App() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: libraries,
   });
-  console.log(process.env.REACT_APP_GOOGLE_API_KEY);
 
   if (loadError) {
     return 'ERROR LOADING SCRIPTS';
