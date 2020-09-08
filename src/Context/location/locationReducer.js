@@ -8,8 +8,7 @@ import {
 } from '../types.js';
 
 const tooCold = (place) => {
-  return (
-    !place.types.contains('lodging') &&
+  !place.types.contains('lodging') &&
     (place.types.contains('bar') ||
       place.types.contains('cafe') ||
       place.types.contains('movie_theater') ||
@@ -20,13 +19,11 @@ const tooCold = (place) => {
       place.types.contains('museum') ||
       place.types.contains('bowling_alley') ||
       place.types.contains('aquarium') ||
-      place.types.contains('spa'))
-  );
+      place.types.contains('spa'));
 };
 
 const goodTemp = (place) => {
-  return (
-    !place.types.contains('lodging') &&
+  !place.types.contains('lodging') &&
     (place.types.contains('restaurant') ||
       place.types.contains('bar') ||
       place.types.contains('cafe') ||
@@ -40,11 +37,12 @@ const goodTemp = (place) => {
       place.types.contains('aquarium') ||
       place.types.contains('spa') ||
       place.types.contains('park') ||
-      place.types.contains('zoo'))
-  );
+      place.types.contains('zoo'));
 };
 
 export default (state, action) => {
+  const { weather, placesList } = action.payload;
+
   switch (action.type) {
     case SET_LNG_LAT:
       return {
@@ -68,21 +66,36 @@ export default (state, action) => {
         locationWeather: action.payload,
       };
     case SET_PLACES:
-      return {
-        ...state,
-        places: action.payload,
-      };
-    case FILTER_PLACES:
-      const { weather, placesList } = action.payload;
-      if (weather.weather_code < 800 || weather.temp_c < 5) {
-        //too cold
-        placesList = placesList.filter(tooCold);
-      } else {
-        placesList = placesList.filter(goodTemp);
+      const { weather, places } = action.payload;
+      let newPlaces = [];
+
+      places.sort(function (place1, place2) {
+        return place2.rating - place1.rating;
+      });
+      //console.log(places);
+
+      if (weather.weatherCode < 800 || weather.temp_c < 5) {
+        //filters out outdoor activities if bad weather
+        newPlaces = places.filter((place) => {
+          return !place.types.includes('park');
+        });
       }
+
+      newPlaces = places.filter((place) => {
+        //filters out all lodging
+        return !(
+          place.types.includes('lodging') ||
+          place.types.includes('place_of_worship')
+        );
+      });
+
+      if (newPlaces.length > 20) {
+        newPlaces = newPlaces.slice(0, 20);
+      }
+
       return {
         ...state,
-        places: placesList,
+        places: newPlaces,
       };
     default:
       console.log(action.type);

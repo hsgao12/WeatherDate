@@ -11,6 +11,9 @@ import {
   FILTER_PLACES,
 } from '../types.js';
 import axios from 'axios';
+import { GoogleMap } from '@react-google-maps/api';
+
+const proxy = 'http://127.0.0.1:8080/';
 
 const LocationState = (props) => {
   const initialState = {
@@ -55,24 +58,31 @@ const LocationState = (props) => {
 
   //Initialize places array with stuff, then filter it
   const setPlaces = async () => {
-    let results = [];
-    const res = await axios.get(
-      `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${
+    const touristResults = await axios.get(
+      `${proxy}https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${
         process.env.REACT_APP_GOOGLE_API_KEY
       }&location=${state.coords.lat},${state.coords.lng}&radius=${
         state.maxDistance * 1000
       }&opennow
-      &type=restaurant`
+      &type=tourist_attraction`
     );
-    results = results.concat(res.data.results);
-    dispatch({ type: SET_PLACES, payload: results });
-  };
 
-  //Filters places array based on Weather, Local time
-  const filterPlaces = () => {
+    const touristResultsArray = touristResults.data.results;
+
+    const restaurantResults = await axios.get(`${proxy}https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${
+      process.env.REACT_APP_GOOGLE_API_KEY
+    }&location=${state.coords.lat},${state.coords.lng}&radius=${
+      state.maxDistance * 1000
+    }&opennow
+    &keyword=food`);
+
+    const restaurantResultsArray = restaurantResults.data.results;
+
+    const resultsPayload = touristResultsArray.concat(restaurantResultsArray);
+
     dispatch({
-      type: FILTER_PLACES,
-      payload: { weather: state.locationWeather, placesList: state.places },
+      type: SET_PLACES,
+      payload: { weather: state.locationWeather, places: resultsPayload },
     });
   };
 
