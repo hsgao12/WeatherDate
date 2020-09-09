@@ -5,7 +5,11 @@ import Map from '../Components/results-components/Map.jsx';
 const Results = () => {
   const locationContext = React.useContext(LocationContext);
 
-  return <Map />;
+  return (
+    <>
+      <Map />
+    </>
+  );
 };
 
 export default Results;

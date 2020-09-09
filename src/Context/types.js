@@ -4,3 +4,4 @@ export const SET_LOCATION_ID = 'SET_LOCATION_ID';
 export const SET_LOCATION_WEATHER = 'SET_LOCATION_WEATHER';
 export const SET_PLACES = 'SET_PLACES';
 export const FILTER_PLACES = 'FILTER_PLACES';
+export const SET_SELECTED = 'SET_SELECTED';

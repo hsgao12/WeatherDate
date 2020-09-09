@@ -3,7 +3,10 @@ import './App.css';
 
 //Google Maps Modules
 import { useLoadScript } from '@react-google-maps/api';
+
+//Contexts
 import LocationState from './Context/location/LocationState.js';
+import MapState from './Context/map/MapState.js';
 
 //React Routing
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -30,16 +33,18 @@ function App() {
   }
 
   return (
-    <LocationState>
-      <Router>
-        <div className="App">
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/results/:locationId" component={Results} />
-          </Switch>
-        </div>
-      </Router>
-    </LocationState>
+    <MapState>
+      <LocationState>
+        <Router>
+          <div className="App">
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/results/:locationId" component={Results} />
+            </Switch>
+          </div>
+        </Router>
+      </LocationState>
+    </MapState>
   );
 }
 

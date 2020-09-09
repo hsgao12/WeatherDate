@@ -41,8 +41,6 @@ const goodTemp = (place) => {
 };
 
 export default (state, action) => {
-  const { weather, placesList } = action.payload;
-
   switch (action.type) {
     case SET_LNG_LAT:
       return {
@@ -89,8 +87,8 @@ export default (state, action) => {
         );
       });
 
-      if (newPlaces.length > 20) {
-        newPlaces = newPlaces.slice(0, 20);
+      if (newPlaces.length > 10) {
+        newPlaces = newPlaces.slice(0, 10);
       }
 
       return {
